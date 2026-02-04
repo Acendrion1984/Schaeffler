@@ -1,2 +1,0 @@
-# Schaeffler
-ZfP Audit Portal
