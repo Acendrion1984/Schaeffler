@@ -77,175 +77,152 @@
         
         .content-wrapper {
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         
-        /* Header */
+        /* Header - Größer und zentriert */
         .header-card {
             background: var(--card-bg);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 30px;
             box-shadow: var(--shadow);
             text-align: center;
         }
         
         .header-card h1 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 6px;
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 8px;
             color: var(--text-primary);
+            letter-spacing: -0.5px;
         }
         
         .subtitle {
             color: var(--text-secondary);
-            font-size: 15px;
-            margin-bottom: 12px;
+            font-size: 16px;
+            margin-bottom: 8px;
             font-weight: 400;
         }
         
-        .cloud-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--cloud-color);
-            color: white;
-            padding: 6px 14px;
-            border-radius: 18px;
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: 0.3px;
-            gap: 6px;
-        }
-        
-        .cloud-badge::before {
-            content: "●";
-            font-size: 10px;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
-        }
-        
-        /* Kacheln - Kompakt */
+        /* Kacheln - Größer und prominent */
         .audit-container {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 20px;
             margin-bottom: 30px;
+            flex: 1;
+            justify-content: center;
         }
         
         .audit-tile {
             background: var(--card-bg);
-            border-radius: 12px;
-            padding: 18px;
+            border-radius: 16px;
+            padding: 24px;
             text-decoration: none;
             color: inherit;
             box-shadow: var(--shadow);
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: block;
             position: relative;
             overflow: hidden;
-            min-height: 110px;
+            min-height: 140px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        /* Review Audit Kachel */
+        .review-tile {
+            background: linear-gradient(135deg, var(--review-light) 0%, var(--review-medium) 100%);
+            border-left: 6px solid var(--review-dark);
             border: 1px solid var(--border-color);
         }
         
-        /* Review Audit Kachel mit neuer Gestaltung */
-        .review-tile {
-            background: #ffffff;
-            border-left: 4px solid #FF9500;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: all 0.2s;
-        }
-        
-        /* Operator Audit Kachel mit neuer Gestaltung */
+        /* Operator Audit Kachel */
         .operator-tile {
-            background: #ffffff;
-            border-left: 4px solid #3498db;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: all 0.2s;
+            background: linear-gradient(135deg, var(--operator-light) 0%, var(--operator-medium) 100%);
+            border-left: 6px solid var(--operator-dark);
+            border: 1px solid var(--border-color);
         }
         
         .audit-tile:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
         }
         
         .audit-tile:active {
-            opacity: 0.9;
-            transform: scale(0.99);
+            transform: scale(0.98);
         }
         
-        /* Kachel Header */
+        /* Kachel Header - Größerer Titel */
         .tile-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 10px;
+            margin-bottom: 16px;
         }
         
         .tile-title {
-            font-size: 18px;
-            font-weight: 700;
+            font-size: 24px;
+            font-weight: 800;
             color: var(--text-primary);
+            line-height: 1.2;
+            flex: 1;
         }
         
-        /* Status Badge - Neues Design aus index2 */
+        /* Status Badge - Farbig und prominent */
         .status-badge {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 800;
-            font-feature-settings: "tnum";
-            padding: 6px 12px;
-            border-radius: 8px;
-            min-width: 70px;
+            padding: 8px 16px;
+            border-radius: 12px;
             text-align: center;
-            font-family: 'SF Mono', Monaco, 'Courier New', monospace;
-            background: #f8f9fa;
-            border: 1px solid #ddd;
-            color: #2c3e50;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-width: 70px;
+            letter-spacing: 0.5px;
         }
         
         .review-tile .status-badge {
-            background: rgba(255, 149, 0, 0.1);
-            color: #d35400;
+            background: rgba(255, 149, 0, 0.2);
+            color: var(--review-dark);
             border: 1px solid rgba(255, 149, 0, 0.3);
         }
         
         .operator-tile .status-badge {
-            background: rgba(52, 152, 219, 0.1);
-            color: #2980b9;
-            border: 1px solid rgba(52, 152, 219, 0.3);
+            background: rgba(0, 122, 255, 0.2);
+            color: var(--operator-dark);
+            border: 1px solid rgba(0, 122, 255, 0.3);
         }
         
         /* Kachel Content */
         .tile-content {
-            margin-bottom: 12px;
+            margin-bottom: 16px;
+            flex: 1;
         }
         
         .tile-content p {
             color: var(--text-secondary);
-            font-size: 14px;
-            line-height: 1.4;
+            font-size: 16px;
+            line-height: 1.5;
             font-weight: 400;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
         
         .badge-label {
-            font-size: 11px;
-            color: #7f8c8d;
-            font-weight: 500;
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
             display: inline-block;
-            padding: 3px 8px;
-            background: #f0f0f0;
+            padding: 4px 10px;
+            background: rgba(0, 0, 0, 0.05);
             border-radius: 10px;
-            margin-top: 5px;
+            margin-top: 8px;
         }
         
         /* Kachel Footer */
@@ -253,36 +230,35 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 12px;
-            border-top: 1px solid #eee;
-            margin-top: 10px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            margin-top: auto;
         }
         
         .audit-type-badge {
-            background: #f0f0f0;
-            color: #666;
-            padding: 5px 12px;
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text-secondary);
+            padding: 6px 14px;
             border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-            opacity: 0.9;
+            font-size: 13px;
+            font-weight: 700;
         }
         
         .review-tile .audit-type-badge {
             background: rgba(255, 149, 0, 0.15);
-            color: #d35400;
+            color: var(--review-dark);
         }
         
         .operator-tile .audit-type-badge {
-            background: rgba(52, 152, 219, 0.15);
-            color: #2980b9;
+            background: rgba(0, 122, 255, 0.15);
+            color: var(--operator-dark);
         }
         
         .arrow-icon {
-            color: #95a5a6;
-            font-size: 18px;
+            color: var(--text-secondary);
+            font-size: 20px;
             font-weight: bold;
-            opacity: 0.8;
+            opacity: 0.7;
         }
         
         /* Fußzeile */
@@ -334,26 +310,32 @@
         /* iPhone Optimization */
         @media (max-width: 375px) {
             .header-card {
-                padding: 16px;
+                padding: 20px;
+                border-radius: 14px;
             }
             
             .header-card h1 {
-                font-size: 22px;
+                font-size: 24px;
             }
             
             .audit-tile {
-                padding: 16px;
-                min-height: 100px;
+                padding: 20px;
+                min-height: 130px;
+                border-radius: 14px;
             }
             
             .tile-title {
-                font-size: 17px;
+                font-size: 22px;
             }
             
             .status-badge {
-                font-size: 16px;
-                min-width: 60px;
-                padding: 5px 10px;
+                font-size: 15px;
+                min-width: 65px;
+                padding: 7px 14px;
+            }
+            
+            .tile-content p {
+                font-size: 15px;
             }
             
             .footer-centered {
@@ -379,7 +361,6 @@
         <div class="header-card">
             <h1>ZfP Audit Portal</h1>
             <p class="subtitle">Zerstörungsfreie Prüfverfahren - Operator Qualifizierung</p>
-            <div class="cloud-badge">Cloud verbunden</div>
         </div>
         
         <!-- Zwei Kacheln -->
@@ -390,7 +371,7 @@
                class="audit-tile review-tile">
                 <div class="tile-header">
                     <div class="tile-title">Review Audit</div>
-                    <div class="status-badge">2/14</div>
+                    <div class="status-badge" id="reviewAuditBadge">--</div>
                 </div>
                 <div class="tile-content">
                     <p>Dokumenten- und Ergebnisprüfung</p>
@@ -408,7 +389,7 @@
                class="audit-tile operator-tile">
                 <div class="tile-header">
                     <div class="tile-title">Operator Audit</div>
-                    <div class="status-badge">6/14</div>
+                    <div class="status-badge" id="operatorAuditBadge">--</div>
                 </div>
                 <div class="tile-content">
                     <p>Prozess- und Personalprüfung</p>
@@ -461,6 +442,9 @@
                     this.style.transform = 'scale(1)';
                 });
             });
+            
+            // Badges mit Platzhaltern initialisieren
+            updateAuditBadges();
         });
         
         // Prevent zoom on double tap
@@ -472,6 +456,13 @@
             }
             lastTouchEnd = now;
         }, { passive: false });
+        
+        // Funktion zum Aktualisieren der Badge-Werte
+        function updateAuditBadges() {
+            // Hier könnten später dynamische Werte geladen werden
+            document.getElementById('reviewAuditBadge').textContent = '--';
+            document.getElementById('operatorAuditBadge').textContent = '--';
+        }
     </script>
 </body>
 </html>
