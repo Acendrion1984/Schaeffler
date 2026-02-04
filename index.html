@@ -151,16 +151,29 @@
             border: 1px solid var(--border-color);
         }
         
-        /* Review Audit Kachel mit orange Hintergrund */
+        /* Review Audit Kachel mit neuer Gestaltung */
         .review-tile {
-            background: linear-gradient(135deg, var(--review-light) 0%, var(--review-medium) 100%);
-            border-left: 4px solid var(--review-dark);
+            background: #ffffff;
+            border-left: 4px solid #FF9500;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.2s;
         }
         
-        /* Operator Audit Kachel mit blau Hintergrund */
+        /* Operator Audit Kachel mit neuer Gestaltung */
         .operator-tile {
-            background: linear-gradient(135deg, var(--operator-light) 0%, var(--operator-medium) 100%);
-            border-left: 4px solid var(--operator-dark);
+            background: #ffffff;
+            border-left: 4px solid #3498db;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+        }
+        
+        .audit-tile:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
         }
         
         .audit-tile:active {
@@ -182,28 +195,31 @@
             color: var(--text-primary);
         }
         
-        /* Status Badge */
+        /* Status Badge - Neues Design aus index2 */
         .status-badge {
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 800;
             font-feature-settings: "tnum";
-            padding: 4px 10px;
+            padding: 6px 12px;
             border-radius: 8px;
             min-width: 70px;
             text-align: center;
             font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            color: #2c3e50;
         }
         
         .review-tile .status-badge {
-            background: rgba(255, 149, 0, 0.2);
-            color: var(--review-dark);
+            background: rgba(255, 149, 0, 0.1);
+            color: #d35400;
             border: 1px solid rgba(255, 149, 0, 0.3);
         }
         
         .operator-tile .status-badge {
-            background: rgba(0, 122, 255, 0.2);
-            color: var(--operator-dark);
-            border: 1px solid rgba(0, 122, 255, 0.3);
+            background: rgba(52, 152, 219, 0.1);
+            color: #2980b9;
+            border: 1px solid rgba(52, 152, 219, 0.3);
         }
         
         /* Kachel Content */
@@ -216,16 +232,20 @@
             font-size: 14px;
             line-height: 1.4;
             font-weight: 400;
+            margin-bottom: 8px;
         }
         
         .badge-label {
             font-size: 11px;
-            color: var(--text-secondary);
+            color: #7f8c8d;
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-top: 4px;
-            display: block;
+            display: inline-block;
+            padding: 3px 8px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            margin-top: 5px;
         }
         
         /* Kachel Footer */
@@ -234,24 +254,35 @@
             justify-content: space-between;
             align-items: center;
             padding-top: 12px;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            border-top: 1px solid #eee;
+            margin-top: 10px;
         }
         
         .audit-type-badge {
-            background: var(--badge-bg);
-            color: var(--text-secondary);
-            padding: 4px 10px;
-            border-radius: 10px;
+            background: #f0f0f0;
+            color: #666;
+            padding: 5px 12px;
+            border-radius: 12px;
             font-size: 12px;
             font-weight: 600;
-            opacity: 0.8;
+            opacity: 0.9;
+        }
+        
+        .review-tile .audit-type-badge {
+            background: rgba(255, 149, 0, 0.15);
+            color: #d35400;
+        }
+        
+        .operator-tile .audit-type-badge {
+            background: rgba(52, 152, 219, 0.15);
+            color: #2980b9;
         }
         
         .arrow-icon {
-            color: var(--text-secondary);
+            color: #95a5a6;
             font-size: 18px;
             font-weight: bold;
-            opacity: 0.6;
+            opacity: 0.8;
         }
         
         /* Fußzeile */
@@ -320,8 +351,9 @@
             }
             
             .status-badge {
-                font-size: 20px;
+                font-size: 16px;
                 min-width: 60px;
+                padding: 5px 10px;
             }
             
             .footer-centered {
