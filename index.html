@@ -7,52 +7,39 @@
     <style>
         :root {
             /* Light Mode */
-            --bg-color: #f8f9fa;
-            --card-bg: #ffffff;
-            --text-primary: #1a1a1a;
-            --text-secondary: #666666;
-            --border-color: #e0e0e0;
-            --shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            --bg-color: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-primary: #2c3e50;
+            --text-secondary: #7f8c8d;
+            --border-color: rgba(255, 255, 255, 0.2);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             
             /* Review Audit Farben */
-            --review-light: rgba(255, 149, 0, 0.1);
-            --review-medium: rgba(255, 149, 0, 0.2);
+            --review-gradient: linear-gradient(135deg, #ff9a00 0%, #ff5e00 100%);
+            --review-light: rgba(255, 149, 0, 0.15);
             --review-dark: #FF9500;
             
             /* Operator Audit Farben */
-            --operator-light: rgba(0, 122, 255, 0.1);
-            --operator-medium: rgba(0, 122, 255, 0.2);
-            --operator-dark: #007AFF;
-            
-            /* Status Farben */
-            --good-color: #34C759;
-            --warning-color: #FF9500;
-            --cloud-color: #34C759;
+            --operator-gradient: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            --operator-light: rgba(52, 152, 219, 0.15);
+            --operator-dark: #3498db;
         }
         
         @media (prefers-color-scheme: dark) {
             :root {
                 /* Dark Mode */
-                --bg-color: #1c1c1e;
-                --card-bg: #2c2c2e;
-                --text-primary: #ffffff;
-                --text-secondary: #8e8e93;
-                --border-color: #3a3a3c;
-                --shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+                --bg-color: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+                --card-bg: rgba(30, 30, 40, 0.95);
+                --text-primary: #ecf0f1;
+                --text-secondary: #bdc3c7;
+                --border-color: rgba(255, 255, 255, 0.1);
+                --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
                 
                 /* Review Audit Farben - Dark */
-                --review-light: rgba(255, 159, 10, 0.15);
-                --review-medium: rgba(255, 159, 10, 0.25);
-                --review-dark: #FF9F0A;
+                --review-gradient: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
                 
                 /* Operator Audit Farben - Dark */
-                --operator-light: rgba(10, 132, 255, 0.15);
-                --operator-medium: rgba(10, 132, 255, 0.25);
-                --operator-dark: #0A84FF;
-                
-                /* Status Farben - Dark */
-                --good-color: #30D158;
-                --warning-color: #FF9F0A;
+                --operator-gradient: linear-gradient(135deg, #2980b9 0%, #1a252f 100%);
             }
         }
         
@@ -68,126 +55,184 @@
             background: var(--bg-color);
             color: var(--text-primary);
             min-height: 100vh;
-            padding: 16px;
+            padding: 20px;
             padding-bottom: 20px;
             display: flex;
             flex-direction: column;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
         }
         
         .content-wrapper {
             flex: 1;
             display: flex;
             flex-direction: column;
+            justify-content: center;
         }
         
-        /* Header - Kompakt */
+        /* Header - Elegant */
         .header-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px 20px;
+            margin-bottom: 30px;
             box-shadow: var(--shadow);
             text-align: center;
+            border: 1px solid var(--border-color);
         }
         
         .header-card h1 {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 6px;
-            color: var(--text-primary);
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: white;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .subtitle {
-            color: var(--text-secondary);
-            font-size: 14px;
-            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
             font-weight: 400;
+            letter-spacing: 0.5px;
         }
         
-        /* Kacheln - Kompakt */
+        /* Kacheln - Modern mit Icons */
         .audit-container {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 20px;
             margin-bottom: 30px;
         }
         
         .audit-tile {
             background: var(--card-bg);
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 25px;
             text-decoration: none;
             color: inherit;
             box-shadow: var(--shadow);
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: block;
             position: relative;
             overflow: hidden;
-            min-height: 100px;
             border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
         }
         
+        .audit-tile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+        
         /* Review Audit Kachel */
-        .review-tile {
-            background: linear-gradient(135deg, var(--review-light) 0%, var(--review-medium) 100%);
-            border-left: 4px solid var(--review-dark);
+        .review-tile::before {
+            background: var(--review-gradient);
+        }
+        
+        .review-tile:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(255, 149, 0, 0.2);
         }
         
         /* Operator Audit Kachel */
-        .operator-tile {
-            background: linear-gradient(135deg, var(--operator-light) 0%, var(--operator-medium) 100%);
-            border-left: 4px solid var(--operator-dark);
+        .operator-tile::before {
+            background: var(--operator-gradient);
         }
         
-        .audit-tile:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        .operator-tile:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(52, 152, 219, 0.2);
         }
         
         .audit-tile:active {
             transform: scale(0.98);
         }
         
-        /* Kachel Header - Titel prominent */
+        /* Icon und Titel */
         .tile-header {
-            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+        
+        .tile-icon {
+            font-size: 32px;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            flex-shrink: 0;
+        }
+        
+        .review-tile .tile-icon {
+            background: linear-gradient(135deg, #ff9a00 0%, #ff5e00 100%);
+            color: white;
+        }
+        
+        .operator-tile .tile-icon {
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            color: white;
+        }
+        
+        .tile-title-wrapper {
+            flex: 1;
         }
         
         .tile-title {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 700;
             color: var(--text-primary);
-            line-height: 1.3;
+            line-height: 1.2;
+            margin-bottom: 5px;
+        }
+        
+        .tile-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
         }
         
         /* Kachel Content */
         .tile-content {
-            margin-bottom: 12px;
+            margin-bottom: 20px;
             flex: 1;
         }
         
-        .tile-content p {
+        .tile-description {
             color: var(--text-secondary);
-            font-size: 14px;
-            line-height: 1.4;
+            font-size: 15px;
+            line-height: 1.5;
             font-weight: 400;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
         
-        .badge-label {
-            font-size: 11px;
+        .standard-info {
+            font-size: 13px;
             color: var(--text-secondary);
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: inline-block;
-            padding: 3px 8px;
-            background: rgba(0, 0, 0, 0.05);
+            font-style: italic;
+            padding: 10px 15px;
+            background: rgba(0, 0, 0, 0.03);
             border-radius: 10px;
-            margin-top: 5px;
+            border-left: 3px solid;
+        }
+        
+        .review-tile .standard-info {
+            border-left-color: #FF9500;
+            background: rgba(255, 149, 0, 0.05);
+        }
+        
+        .operator-tile .standard-info {
+            border-left-color: #3498db;
+            background: rgba(52, 152, 219, 0.05);
         }
         
         /* Kachel Footer */
@@ -195,7 +240,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 12px;
+            padding-top: 20px;
             border-top: 1px solid rgba(0, 0, 0, 0.08);
             margin-top: auto;
         }
@@ -203,105 +248,122 @@
         .audit-type-badge {
             background: rgba(0, 0, 0, 0.05);
             color: var(--text-secondary);
-            padding: 4px 10px;
-            border-radius: 10px;
-            font-size: 12px;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 13px;
             font-weight: 600;
         }
         
         .review-tile .audit-type-badge {
-            background: rgba(255, 149, 0, 0.15);
+            background: rgba(255, 149, 0, 0.1);
             color: var(--review-dark);
         }
         
         .operator-tile .audit-type-badge {
-            background: rgba(0, 122, 255, 0.15);
+            background: rgba(52, 152, 219, 0.1);
             color: var(--operator-dark);
         }
         
         .arrow-icon {
             color: var(--text-secondary);
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
-            opacity: 0.6;
+            opacity: 0.7;
+            transition: transform 0.3s ease;
         }
         
-        /* Fußzeile - Korrigiert für ZfP Audit Portal */
+        .audit-tile:hover .arrow-icon {
+            transform: translateX(5px);
+        }
+        
+        /* Fußzeile - Korrigierte Struktur */
         .footer-centered {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 16px;
-            box-shadow: var(--shadow);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             text-align: center;
-            color: var(--text-secondary);
+            color: white;
             font-size: 12px;
             line-height: 1.6;
-            margin-top: auto;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .footer-line {
+        .footer-version {
             display: block;
-            margin-bottom: 4px;
-            font-weight: 400;
-        }
-        
-        .footer-line:last-child {
-            margin-bottom: 0;
-        }
-        
-        .company-name {
-            font-weight: 700;
-            color: var(--text-primary);
-            font-size: 13px;
-        }
-        
-        .portal-info {
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-        
-        .creator-info {
-            font-style: italic;
-            color: var(--text-secondary);
-            opacity: 0.9;
             font-size: 11px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 10px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+        
+        .footer-portal-name {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+        
+        .footer-creator {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: white;
+            margin-top: 10px;
+            font-style: normal;
+            letter-spacing: 0.5px;
         }
         
         /* iPhone Optimization */
         @media (max-width: 375px) {
+            body {
+                padding: 15px;
+            }
+            
             .header-card {
-                padding: 16px;
+                padding: 25px 15px;
+                border-radius: 15px;
             }
             
             .header-card h1 {
-                font-size: 20px;
+                font-size: 26px;
             }
             
             .audit-tile {
-                padding: 16px;
-                min-height: 90px;
+                padding: 20px;
+                border-radius: 15px;
+            }
+            
+            .tile-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 26px;
             }
             
             .tile-title {
-                font-size: 18px;
+                font-size: 19px;
             }
             
-            .tile-content p {
-                font-size: 13px;
+            .tile-description {
+                font-size: 14px;
             }
             
             .footer-centered {
-                padding: 14px;
-                font-size: 11px;
+                padding: 15px;
             }
         }
         
         /* Safe Area */
         @supports (padding: max(0px)) {
             body {
-                padding-left: max(16px, env(safe-area-inset-left));
-                padding-right: max(16px, env(safe-area-inset-right));
-                padding-top: max(16px, env(safe-area-inset-top));
+                padding-left: max(20px, env(safe-area-inset-left));
+                padding-right: max(20px, env(safe-area-inset-right));
+                padding-top: max(20px, env(safe-area-inset-top));
                 padding-bottom: max(20px, env(safe-area-inset-bottom));
             }
         }
@@ -322,11 +384,15 @@
                target="_blank" 
                class="audit-tile review-tile">
                 <div class="tile-header">
-                    <div class="tile-title">ZfP Review Audit</div>
+                    <div class="tile-icon">📋</div>
+                    <div class="tile-title-wrapper">
+                        <div class="tile-title">ZfP Review Audit</div>
+                        <div class="tile-subtitle">Dokumenten- und Ergebnisprüfung</div>
+                    </div>
                 </div>
                 <div class="tile-content">
-                    <p>Dokumenten- und Ergebnisprüfung</p>
-                    <span class="badge-label">Offene Maßnahmen</span>
+                    <p class="tile-description">Qualitätsprüfung von Audit-Dokumentation und Ergebnissen</p>
+                    <div class="standard-info">according to IN_QP_29005</div>
                 </div>
                 <div class="tile-footer">
                     <div class="audit-type-badge">Prüfung & Analyse</div>
@@ -339,11 +405,15 @@
                target="_blank" 
                class="audit-tile operator-tile">
                 <div class="tile-header">
-                    <div class="tile-title">ZfP Operator Audit</div>
+                    <div class="tile-icon">👨‍🔬</div>
+                    <div class="tile-title-wrapper">
+                        <div class="tile-title">ZfP Operator Audit</div>
+                        <div class="tile-subtitle">Prozess- und Personalprüfung</div>
+                    </div>
                 </div>
                 <div class="tile-content">
-                    <p>Prozess- und Personalprüfung</p>
-                    <span class="badge-label">Qualifizierte Mitarbeiter</span>
+                    <p class="tile-description">Qualifizierung von Prüfpersonal und Verfahren</p>
+                    <div class="standard-info">according to DIN ISO 9712 & INFSW_17008</div>
                 </div>
                 <div class="tile-footer">
                     <div class="audit-type-badge">Operator Qualifizierung</div>
@@ -353,11 +423,11 @@
         </div>
     </div>
     
-    <!-- Fußzeile - Korrigiert -->
+    <!-- Fußzeile - Korrigierte Struktur -->
     <footer class="footer-centered">
-        <span class="footer-line company-name">ZfP Audit Portal</span>
-        <span class="footer-line portal-info">Version 1.0 | Schaeffler Technologies AG & Co. KG</span>
-        <span class="footer-line creator-info">Ersteller: Häusner Daniel, WI/SW2-PQT</span>
+        <span class="footer-version">Version 1.0</span>
+        <span class="footer-portal-name">ZfP Audit Portal Schaeffler Schweinfurt</span>
+        <span class="footer-creator">Ersteller: Häusner Daniel, WI/SW2-PQT</span>
     </footer>
 
     <script>
