@@ -6,21 +6,39 @@
     <title>ZfP Audit Portal</title>
     <style>
         :root {
-            /* Dunkler Hintergrund */
-            --bg-color: #1a1a1a;
+            /* Light Mode */
+            --bg-color: #f2f2f7;
+            --text-primary: #000000;
+            --text-secondary: #3c3c43;
+            --tile-border: rgba(0, 0, 0, 0.1);
             
             /* Review Audit Farben - Gelb */
-            --review-bg: linear-gradient(135deg, #FF9500 0%, #FFB347 100%);
-            --review-text: #ffffff;
-            --review-shadow: 0 4px 20px rgba(255, 149, 0, 0.3);
+            --review-bg-light: linear-gradient(135deg, #FF9500 0%, #FFB347 100%);
+            --review-text-light: #ffffff;
+            --review-shadow-light: 0 4px 20px rgba(255, 149, 0, 0.2);
             
             /* Operator Audit Farben - Blau */
-            --operator-bg: linear-gradient(135deg, #007AFF 0%, #5AC8FA 100%);
-            --operator-text: #ffffff;
-            --operator-shadow: 0 4px 20px rgba(0, 122, 255, 0.3);
-            
-            --text-primary: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.7);
+            --operator-bg-light: linear-gradient(135deg, #007AFF 0%, #5AC8FA 100%);
+            --operator-text-light: #ffffff;
+            --operator-shadow-light: 0 4px 20px rgba(0, 122, 255, 0.2);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                /* Dark Mode */
+                --bg-color: #000000;
+                --text-primary: #ffffff;
+                --text-secondary: #8e8e93;
+                --tile-border: rgba(255, 255, 255, 0.1);
+                
+                /* Review Audit Farben - Gelb (dunkler) */
+                --review-bg-light: linear-gradient(135deg, #E67E22 0%, #F39C12 100%);
+                --review-shadow-light: 0 4px 20px rgba(230, 126, 34, 0.3);
+                
+                /* Operator Audit Farben - Blau (dunkler) */
+                --operator-bg-light: linear-gradient(135deg, #0056CC 0%, #007AFF 100%);
+                --operator-shadow-light: 0 4px 20px rgba(0, 122, 255, 0.3);
+            }
         }
         
         * {
@@ -38,6 +56,7 @@
             padding: 20px;
             display: flex;
             flex-direction: column;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
         .content-wrapper {
@@ -66,7 +85,7 @@
             font-weight: 400;
         }
         
-        /* Kacheln - Vollfarbig */
+        /* Kacheln */
         .audit-container {
             display: flex;
             flex-direction: column;
@@ -87,21 +106,28 @@
             -webkit-backdrop-filter: blur(20px);
             position: relative;
             overflow: hidden;
-            border: none;
+            border: 1px solid var(--tile-border); /* Dünner Rand für Light Mode */
+        }
+        
+        /* Im Light Mode stärkeren Rand für besseren Kontrast */
+        @media (prefers-color-scheme: light) {
+            .audit-tile {
+                border: 1px solid rgba(0, 0, 0, 0.15);
+            }
         }
         
         /* Gelbe Review Kachel */
         .review-tile {
-            background: var(--review-bg);
-            color: var(--review-text);
-            box-shadow: var(--review-shadow);
+            background: var(--review-bg-light);
+            color: var(--review-text-light);
+            box-shadow: var(--review-shadow-light);
         }
         
         /* Blaue Operator Kachel */
         .operator-tile {
-            background: var(--operator-bg);
-            color: var(--operator-text);
-            box-shadow: var(--operator-shadow);
+            background: var(--operator-bg-light);
+            color: var(--operator-text-light);
+            box-shadow: var(--operator-shadow-light);
         }
         
         /* Hover Effekte */
@@ -124,7 +150,7 @@
         .tile-header {
             display: flex;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             gap: 12px;
         }
         
@@ -137,7 +163,7 @@
             justify-content: center;
             font-size: 22px;
             font-weight: 500;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
         }
@@ -148,18 +174,31 @@
             color: white;
         }
         
-        /* Normen */
+        /* Normen mit besserem Kontrast */
         .norms {
             margin-top: 8px;
             font-size: 13px;
-            line-height: 1.5;
+            line-height: 1.6;
             color: rgba(255, 255, 255, 0.95);
-            font-weight: 500;
         }
         
-        .norm-line {
+        .norm-item {
             display: block;
-            margin-bottom: 4px;
+            margin-bottom: 8px;
+        }
+        
+        .norm-code {
+            font-weight: 700;
+            color: white;
+            margin-right: 6px;
+            display: inline-block;
+            min-width: 120px;
+        }
+        
+        .norm-description {
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.9);
+            display: inline;
         }
         
         /* Fußzeile */
@@ -172,7 +211,7 @@
         
         .footer-version {
             font-size: 11px;
-            color: rgba(255, 255, 255, 0.5);
+            color: var(--text-secondary);
             margin-bottom: 6px;
             letter-spacing: 0.3px;
         }
@@ -223,6 +262,10 @@
             .norms {
                 font-size: 12px;
             }
+            
+            .norm-code {
+                min-width: 110px;
+            }
         }
         
         /* Safe Area */
@@ -257,7 +300,10 @@
                     </div>
                 </div>
                 <div class="norms">
-                    <span class="norm-line">IN_QP_29005</span>
+                    <div class="norm-item">
+                        <span class="norm-code">IN QP 29005</span>
+                        <span class="norm-description">ZfP Review Audits</span>
+                    </div>
                 </div>
             </a>
             
@@ -272,8 +318,14 @@
                     </div>
                 </div>
                 <div class="norms">
-                    <span class="norm-line">DIN ISO 9712</span>
-                    <span class="norm-line">INFSW_17008</span>
+                    <div class="norm-item">
+                        <span class="norm-code">DIN EN ISO 9712</span>
+                        <span class="norm-description">Qualifizierung und Zertifizierung von Personal</span>
+                    </div>
+                    <div class="norm-item">
+                        <span class="norm-code">INFSW 17008</span>
+                        <span class="norm-description">NDT Personal</span>
+                    </div>
                 </div>
             </a>
         </div>
