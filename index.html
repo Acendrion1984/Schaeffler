@@ -106,7 +106,7 @@
             -webkit-backdrop-filter: blur(20px);
             position: relative;
             overflow: hidden;
-            border: 1px solid var(--tile-border); /* Dünner Rand für Light Mode */
+            border: 1px solid var(--tile-border);
         }
         
         /* Im Light Mode stärkeren Rand für besseren Kontrast */
@@ -174,31 +174,28 @@
             color: white;
         }
         
-        /* Normen mit besserem Kontrast */
+        /* Normen in EINER Zeile - kleinerer Text */
         .norms {
             margin-top: 8px;
-            font-size: 13px;
-            line-height: 1.6;
-            color: rgba(255, 255, 255, 0.95);
         }
         
-        .norm-item {
+        .norm-line {
             display: block;
-            margin-bottom: 8px;
+            font-size: 11px;
+            line-height: 1.4;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 4px;
         }
         
         .norm-code {
             font-weight: 700;
             color: white;
-            margin-right: 6px;
-            display: inline-block;
-            min-width: 120px;
+            margin-right: 4px;
         }
         
         .norm-description {
             font-weight: 400;
             color: rgba(255, 255, 255, 0.9);
-            display: inline;
         }
         
         /* Fußzeile */
@@ -259,12 +256,8 @@
                 font-size: 18px;
             }
             
-            .norms {
-                font-size: 12px;
-            }
-            
-            .norm-code {
-                min-width: 110px;
+            .norm-line {
+                font-size: 10px;
             }
         }
         
@@ -300,7 +293,7 @@
                     </div>
                 </div>
                 <div class="norms">
-                    <div class="norm-item">
+                    <div class="norm-line">
                         <span class="norm-code">IN QP 29005</span>
                         <span class="norm-description">ZfP Review Audits</span>
                     </div>
@@ -318,11 +311,11 @@
                     </div>
                 </div>
                 <div class="norms">
-                    <div class="norm-item">
+                    <div class="norm-line">
                         <span class="norm-code">DIN EN ISO 9712</span>
                         <span class="norm-description">Qualifizierung und Zertifizierung von Personal</span>
                     </div>
-                    <div class="norm-item">
+                    <div class="norm-line">
                         <span class="norm-code">INFSW 17008</span>
                         <span class="norm-description">NDT Personal</span>
                     </div>
