@@ -1,369 +1,240 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ZfP Audit Portal</title>
-    <style>
-        :root {
-            /* Light Mode */
-            --bg-color: #f2f2f7;
-            --text-primary: #000000;
-            --text-secondary: #3c3c43;
-            --tile-border: rgba(0, 0, 0, 0.1);
-            
-            /* Review Audit Farben - Gelb */
-            --review-bg-light: linear-gradient(135deg, #FF9500 0%, #FFB347 100%);
-            --review-text-light: #ffffff;
-            --review-shadow-light: 0 4px 20px rgba(255, 149, 0, 0.2);
-            
-            /* Operator Audit Farben - Blau */
-            --operator-bg-light: linear-gradient(135deg, #007AFF 0%, #5AC8FA 100%);
-            --operator-text-light: #ffffff;
-            --operator-shadow-light: 0 4px 20px rgba(0, 122, 255, 0.2);
-        }
-        
-        @media (prefers-color-scheme: dark) {
-            :root {
-                /* Dark Mode */
-                --bg-color: #000000;
-                --text-primary: #ffffff;
-                --text-secondary: #8e8e93;
-                --tile-border: rgba(255, 255, 255, 0.1);
-                
-                /* Review Audit Farben - Gelb (dunkler) */
-                --review-bg-light: linear-gradient(135deg, #E67E22 0%, #F39C12 100%);
-                --review-shadow-light: 0 4px 20px rgba(230, 126, 34, 0.3);
-                
-                /* Operator Audit Farben - Blau (dunkler) */
-                --operator-bg-light: linear-gradient(135deg, #0056CC 0%, #007AFF 100%);
-                --operator-shadow-light: 0 4px 20px rgba(0, 122, 255, 0.3);
-            }
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-        
-        body {
-            background: var(--bg-color);
-            color: var(--text-primary);
-            min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        
-        .content-wrapper {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        /* Header */
-        .header-card {
-            text-align: center;
-            margin-bottom: 40px;
-            padding-top: 20px;
-        }
-        
-        .header-card h1 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--text-primary);
-        }
-        
-        .subtitle {
-            color: var(--text-secondary);
-            font-size: 14px;
-            font-weight: 400;
-        }
-        
-        /* Kacheln */
-        .audit-container {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            max-width: 400px;
-            margin: 0 auto;
-            width: 100%;
-        }
-        
-        .audit-tile {
-            border-radius: 16px;
-            padding: 20px;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            display: block;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            position: relative;
-            overflow: hidden;
-            border: 1px solid var(--tile-border);
-        }
-        
-        /* Im Light Mode stärkeren Rand für besseren Kontrast */
-        @media (prefers-color-scheme: light) {
-            .audit-tile {
-                border: 1px solid rgba(0, 0, 0, 0.15);
-            }
-        }
-        
-        /* Gelbe Review Kachel */
-        .review-tile {
-            background: var(--review-bg-light);
-            color: var(--review-text-light);
-            box-shadow: var(--review-shadow-light);
-        }
-        
-        /* Blaue Operator Kachel */
-        .operator-tile {
-            background: var(--operator-bg-light);
-            color: var(--operator-text-light);
-            box-shadow: var(--operator-shadow-light);
-        }
-        
-        /* Hover Effekte */
-        .review-tile:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(255, 149, 0, 0.4);
-        }
-        
-        .operator-tile:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(0, 122, 255, 0.4);
-        }
-        
-        .audit-tile:active {
-            transform: scale(0.98);
-            transition: transform 0.1s ease;
-        }
-        
-        /* Kachel Inhalt */
-        .tile-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            gap: 12px;
-        }
-        
-        .tile-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            font-weight: 500;
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-        
-        .tile-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: white;
-        }
-        
-        /* Normen in EINER Zeile - kleinerer Text */
-        .norms {
-            margin-top: 8px;
-        }
-        
-        .norm-line {
-            display: block;
-            font-size: 11px;
-            line-height: 1.4;
-            color: rgba(255, 255, 255, 0.95);
-            margin-bottom: 4px;
-        }
-        
-        .norm-code {
-            font-weight: 700;
-            color: white;
-            margin-right: 4px;
-        }
-        
-        .norm-description {
-            font-weight: 400;
-            color: rgba(255, 255, 255, 0.9);
-        }
-        
-        /* Fußzeile */
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px 0;
-            color: var(--text-secondary);
-        }
-        
-        .footer-version {
-            font-size: 11px;
-            color: var(--text-secondary);
-            margin-bottom: 6px;
-            letter-spacing: 0.3px;
-        }
-        
-        .footer-portal {
-            font-size: 13px;
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: var(--text-primary);
-        }
-        
-        .footer-creator {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-        
-        /* iPhone Optimization */
-        @media (max-width: 375px) {
-            body {
-                padding: 16px;
-            }
-            
-            .header-card {
-                margin-bottom: 30px;
-            }
-            
-            .header-card h1 {
-                font-size: 24px;
-            }
-            
-            .audit-tile {
-                padding: 16px;
-                border-radius: 14px;
-            }
-            
-            .tile-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 20px;
-                border-radius: 10px;
-            }
-            
-            .tile-title {
-                font-size: 18px;
-            }
-            
-            .norm-line {
-                font-size: 10px;
-            }
-        }
-        
-        /* Safe Area */
-        @supports (padding: max(0px)) {
-            body {
-                padding-left: max(20px, env(safe-area-inset-left));
-                padding-right: max(20px, env(safe-area-inset-right));
-                padding-top: max(20px, env(safe-area-inset-top));
-                padding-bottom: max(20px, env(safe-area-inset-bottom));
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="content-wrapper">
-        <!-- Header -->
-        <div class="header-card">
-            <h1>ZfP Audit Portal</h1>
-            <p class="subtitle">Operator Qualifizierung</p>
-        </div>
-        
-        <!-- Zwei Kacheln -->
-        <div class="audit-container">
-            <!-- Review Audit Kachel - GELB -->
-            <a href="https://acendrion1984.github.io/ZfP_Review/" 
-               target="_blank" 
-               class="audit-tile review-tile">
-                <div class="tile-header">
-                    <div class="tile-icon">📋</div>
-                    <div>
-                        <div class="tile-title">ZfP Review Audit</div>
-                    </div>
-                </div>
-                <div class="norms">
-                    <div class="norm-line">
-                        <span class="norm-code">IN QP 29005</span>
-                        <span class="norm-description">ZfP Review Audits</span>
-                    </div>
-                </div>
-            </a>
-            
-            <!-- Operator Audit Kachel - BLAU -->
-            <a href="https://acendrion1984.github.io/ZfP" 
-               target="_blank" 
-               class="audit-tile operator-tile">
-                <div class="tile-header">
-                    <div class="tile-icon">👨‍🔬</div>
-                    <div>
-                        <div class="tile-title">ZfP Operator Audit</div>
-                    </div>
-                </div>
-                <div class="norms">
-                    <div class="norm-line">
-                        <span class="norm-code">DIN EN ISO 9712</span>
-                        <span class="norm-description">Qualifizierung und Zertifizierung</span>
-                    </div>
-                    <div class="norm-line">
-                        <span class="norm-code">INFSW 17008</span>
-                        <span class="norm-description">   NDT Personal</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
-    
-    <!-- Fußzeile -->
-    <footer class="footer">
-        <div class="footer-version">Version 1.0</div>
-        <div class="footer-portal">ZfP Audit Portal Schaeffler Schweinfurt</div>
-        <div class="footer-creator">Ersteller: Häusner Daniel, WI/SW2-PQT</div>
-    </footer>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZfP Audit Portal - Schaeffler</title>
 
-    <script>
-        // Touch Optimierung
-        document.addEventListener('DOMContentLoaded', function() {
-            // Verhindert Text-Selection
-            const elements = document.querySelectorAll('.audit-tile');
-            elements.forEach(el => {
-                el.style.webkitUserSelect = 'none';
-                el.style.userSelect = 'none';
-            });
-            
-            // Aktive States für Touch
-            document.querySelectorAll('.audit-tile').forEach(tile => {
-                tile.addEventListener('touchstart', function() {
-                    this.style.transform = 'scale(0.98)';
-                });
-                
-                tile.addEventListener('touchend', function() {
-                    setTimeout(() => {
-                        this.style.transform = 'scale(1)';
-                    }, 150);
-                });
-            });
-        });
-        
-        // Prevent zoom on double tap
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function(event) {
-            const now = Date.now();
-            if (now - lastTouchEnd <= 300) {
-                event.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, { passive: false });
-    </script>
+  <style>
+    /* ===== Basis wie Operator Audit ===== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body{
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.4;
+      color:#333;
+      background:#f5f5f5;
+      padding: 10px;
+      font-size: 14px;
+    }
+    .container{
+      max-width: 900px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 14px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    }
+    header{
+      text-align:center;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #2c3e50;
+    }
+    h1{
+      color:#2c3e50;
+      font-size: 1.8em;
+      margin-bottom: 4px;
+    }
+    .subtitle{
+      color:#7f8c8d;
+      font-size: .95em;
+    }
+
+    /* ===== Kacheln im Audit-Button Stil ===== */
+    .portal-section{
+      margin-top: 14px;
+    }
+    .portal-section h2{
+      text-align:center;
+      color:#2c3e50;
+      margin-bottom: 12px;
+      font-size: 1.05em;
+      font-weight: 700;
+    }
+
+    .tiles{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+    }
+
+    .tile{
+      text-decoration:none;
+      display:flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 14px 12px;
+      border-radius: 8px;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+      min-height: 110px;
+      position: relative;
+      overflow: hidden;
+    }
+    .tile:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+      opacity: .98;
+    }
+    .tile:active{ transform: scale(.99); }
+
+    .tile-top{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .tile-left{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .tile-icon{
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: rgba(255,255,255,0.18);
+      font-size: 20px;
+      flex: 0 0 auto;
+    }
+    .tile-title{
+      font-weight: 800;
+      font-size: 1.05em;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .tile-badge{
+      flex: 0 0 auto;
+      font-size: .75em;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.22);
+      white-space: nowrap;
+    }
+    .tile-meta{
+      font-size: .85em;
+      color: rgba(255,255,255,0.92);
+      display:flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .tile-meta strong{
+      color:#fff;
+      font-weight: 800;
+    }
+
+    /* Farbthemen analog zu Audit-Buttons */
+    .tile.operator { background: #3498db; }   /* wie Wirbelstrom */
+    .tile.review   { background: #f39c12; }   /* wie Report-Button */
+    .tile.operator::after,
+    .tile.review::after{
+      content:'';
+      position:absolute;
+      inset:-40% -30%;
+      background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.22), transparent 55%);
+      transform: rotate(10deg);
+      pointer-events:none;
+    }
+
+    /* Footer wie Operator Audit */
+    footer{
+      text-align:center;
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px solid #ecf0f1;
+      color:#7f8c8d;
+      font-size: .85em;
+    }
+    .creator-info{ font-weight: bold; color:#2c3e50; margin-top: 4px; }
+    .version-info{ margin-top: 2px; font-size: .85em; color:#7f8c8d; }
+
+    /* Mobile */
+    @media (max-width: 768px){
+      body{ padding: 6px; font-size: 13px; }
+      .container{ padding: 10px; }
+      h1{ font-size: 1.25em; }
+      .tile{ min-height: 100px; }
+      .tiles{ grid-template-columns: 1fr; }
+    }
+
+    /* Dark Mode wie Operator Audit */
+    @media (prefers-color-scheme: dark){
+      body{ background:#121212; color:#e0e0e0; }
+      .container{ background:#1e1e1e; box-shadow: 0 2px 10px rgba(0,0,0,.35); }
+      header{ border-bottom-color:#444; }
+      h1{ color:#fff; }
+      .subtitle{ color:#ccc; }
+      .portal-section h2{ color:#fff; }
+      footer{ border-top-color:#444; color:#ccc; }
+      .creator-info{ color:#fff; }
+      .version-info{ color:#aaa; }
+      .tile.operator{ background:#2980b9; }
+      .tile.review{ background:#d35400; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>ZfP Audit Portal</h1>
+      <div class="subtitle">Operator Qualifizierung</div>
+    </header>
+
+    <section class="portal-section">
+      <h2>Bitte Anwendung auswählen:</h2>
+
+      <div class="tiles">
+        <!-- Review Audit -->
+        <a class="tile review"
+           href="https://acendrion1984.github.io/ZfP_Review/"
+           target="_blank" rel="noopener">
+          <div class="tile-top">
+            <div class="tile-left">
+              <div class="tile-icon">📋</div>
+              <div class="tile-title">ZfP Review Audit</div>
+            </div>
+            <div class="tile-badge">Review</div>
+          </div>
+          <div class="tile-meta">
+            <div><strong>IN QP 29005</strong> – ZfP Review Audits</div>
+          </div>
+        </a>
+
+        <!-- Operator Audit -->
+        <a class="tile operator"
+           href="https://acendrion1984.github.io/ZfP"
+           target="_blank" rel="noopener">
+          <div class="tile-top">
+            <div class="tile-left">
+              <div class="tile-icon">👨‍🔬</div>
+              <div class="tile-title">ZfP Operator Audit</div>
+            </div>
+            <div class="tile-badge">Operator</div>
+          </div>
+          <div class="tile-meta">
+            <div><strong>DIN EN ISO 9712</strong> – Qualifizierung & Zertifizierung</div>
+            <div><strong>INFSW 17008</strong> – NDT Personal</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      <div class="version-info">Version 1.0</div>
+      <div>ZfP Audit Portal Schaeffler Schweinfurt</div>
+      <div class="creator-info">Ersteller: Häusner Daniel, WI/SW2-PQT</div>
+    </footer>
+  </div>
 </body>
 </html>
